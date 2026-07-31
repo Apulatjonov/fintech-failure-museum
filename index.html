@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fintech Failure Museum — Every financial disaster changed how the world builds money." />
+  <title>Fintech Failure Museum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="logo">FFM</a>
+      <ul class="nav-links">
+        <li><a href="#stats">Cost</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#why">Why</a></li>
+        <li><button class="engineer-toggle" id="engineerToggle">Engineer Mode</button></li>
+      </ul>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#stats">Cost</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#collection">Collection</a>
+    <a href="#why">Why</a>
+    <button class="engineer-toggle" id="engineerToggleMobile">Engineer Mode</button>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-bg" id="heroBg">
+        <canvas id="mapCanvas"></canvas>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="line">FINTECH</span>
+          <span class="line">FAILURE</span>
+          <span class="line">MUSEUM</span>
+        </h1>
+        <p class="hero-subtitle">
+          Every financial disaster has a story.<br />
+          Every story changed how the world builds money.
+        </p>
+        <a href="#stats" class="btn-enter" id="enterBtn">
+          <span>ENTER THE MUSEUM</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats" id="stats">
+      <div class="section-header">
+        <p class="eyebrow">The Cost of Failure</p>
+        <h2 class="section-title">
+          <span class="stat-number" data-target="700">0</span><span class="stat-suffix">B+</span>
+        </h2>
+        <p class="section-desc">Estimated value destroyed by major fintech failures</p>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card" data-incident="knight">
+          <div class="stat-card-inner">
+            <h3>Knight Capital</h3>
+            <p class="stat-loss">$440M</p>
+            <p class="stat-meta">45 minutes</p>
+            <span class="stat-tag">Software</span>
+          </div>
+        </article>
+        <article class="stat-card" data-incident="wirecard">
+          <div class="stat-card-inner">
+            <h3>Wirecard</h3>
+            <p class="stat-loss">€1.9B</p>
+            <p class="stat-meta">Fraud</p>
+            <span class="stat-tag">Governance</span>
+          </div>
+        </article>
+        <article class="stat-card" data-incident="svb">
+          <div class="stat-card-inner">
+            <h3>Silicon Valley Bank</h3>
+            <p class="stat-loss">$209B</p>
+            <p class="stat-meta">Collapse</p>
+            <span class="stat-tag">Liquidity</span>
+          </div>
+        </article>
+        <article class="stat-card" data-incident="bangladesh">
+          <div class="stat-card-inner">
+            <h3>Bangladesh Bank</h3>
+            <p class="stat-loss">$81M</p>
+            <p class="stat-meta">Cyberattack</p>
+            <span class="stat-tag">Cyber</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" id="timeline">
+      <div class="section-header">
+        <p class="eyebrow">History</p>
+        <h2 class="section-title">Timeline of Failures</h2>
+      </div>
+      <div class="timeline-wrapper">
+        <div class="timeline-track" id="timelineTrack">
+          <div class="timeline-line"></div>
+          <!-- nodes injected by JS -->
+        </div>
+      </div>
+      <div class="timeline-detail" id="timelineDetail">
+        <button class="timeline-close" id="timelineClose">×</button>
+        <div class="timeline-detail-content" id="timelineDetailContent"></div>
+      </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section class="collection" id="collection">
+      <div class="section-header">
+        <p class="eyebrow">The Collection</p>
+        <h2 class="section-title">Museum Artifacts</h2>
+        <div class="collection-controls">
+          <div class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="software">Software</button>
+            <button class="filter-btn" data-filter="fraud">Fraud</button>
+            <button class="filter-btn" data-filter="cyber">Cyber</button>
+            <button class="filter-btn" data-filter="liquidity">Liquidity</button>
+            <button class="filter-btn" data-filter="governance">Governance</button>
+          </div>
+          <div class="collection-actions">
+            <button class="btn-secondary" id="surpriseBtn">Surprise Me</button>
+            <button class="btn-secondary" id="museumModeBtn">Museum Mode</button>
+          </div>
+        </div>
+      </div>
+      <div class="gallery" id="gallery">
+        <!-- cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- WHY FAILURES HAPPEN -->
+    <section class="why" id="why">
+      <div class="section-header">
+        <p class="eyebrow">Patterns</p>
+        <h2 class="section-title">Why Failures Happen</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-number">01</div>
+          <h3>Complexity Debt</h3>
+          <p>Systems grow faster than understanding. Edge cases become landmines.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-number">02</div>
+          <h3>Missing Kill Switches</h3>
+          <p>No circuit breakers. No feature flags. No way to stop the bleeding.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-number">03</div>
+          <h3>Human + Process Gaps</h3>
+          <p>Code is only as safe as the deployment process and the people running it.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-number">04</div>
+          <h3>Incentive Misalignment</h3>
+          <p>Speed over safety. Growth over controls. Until the day it isn’t.</p>
+        </div>
+      </div>
+      <div class="root-cause">
+        <h3>Root Cause Distribution</h3>
+        <div class="root-visual" id="rootVisual">
+          <div class="root-ring" data-pct="82" data-label="Software" data-color="#CDA349"></div>
+          <div class="root-ring" data-pct="15" data-label="Process" data-color="#3F8CFF"></div>
+          <div class="root-ring" data-pct="3" data-label="People" data-color="#D64545"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED STORY (Knight Capital deep dive) -->
+    <section class="featured" id="featured">
+      <div class="featured-sticky">
+        <div class="featured-header">
+          <p class="eyebrow">Featured Artifact</p>
+          <h2>Knight Capital</h2>
+          <p class="featured-meta">August 1, 2012 · $440 Million · 45 Minutes</p>
+        </div>
+      </div>
+      <div class="story-screens" id="storyScreens">
+        <div class="story-screen" data-step="1">
+          <div class="story-content">
+            <p class="story-time">08:00 AM</p>
+            <h3>Deployment begins</h3>
+            <p>Engineers push new code for a NYSE retail liquidity program. One server is missed.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="2">
+          <div class="story-content">
+            <p class="story-time">08:01 AM</p>
+            <h3>Old flag remains</h3>
+            <p>A deprecated “Power Peg” flag is still active on one of eight servers.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="3">
+          <div class="story-content">
+            <p class="story-time">09:30 AM</p>
+            <h3>Market opens</h3>
+            <p>The dormant code awakens. Orders begin firing at extreme speed.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="4">
+          <div class="story-content">
+            <p class="story-time">09:30 – 09:45</p>
+            <h3>4 million orders</h3>
+            <p>In 45 minutes the system sends millions of orders across 154 stocks.</p>
+            <div class="loss-counter" id="lossCounter">
+              <span class="loss-value">$0</span>
+              <span class="loss-label">Accumulated Loss</span>
+            </div>
+          </div>
+        </div>
+        <div class="story-screen" data-step="5">
+          <div class="story-content">
+            <p class="story-time">10:15 AM</p>
+            <h3>Trading halted</h3>
+            <p>Knight Capital’s net capital is effectively wiped out. The firm is sold days later.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="6">
+          <div class="story-content">
+            <h3>What changed</h3>
+            <div class="lessons-grid">
+              <div class="lesson-card">
+                <h4>Kill Switches</h4>
+                <p>Mandatory ability to stop all automated trading instantly.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Feature Flags</h4>
+                <p>Strict lifecycle and validation for every configuration flag.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Canary Releases</h4>
+                <p>Never deploy to 100% of capacity at once.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Deployment Validation</h4>
+                <p>Automated checks that every server received the correct code.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED STORY 2 — Silicon Valley Bank -->
+    <section class="featured featured-svb" id="featured-svb">
+      <div class="featured-sticky">
+        <div class="featured-header">
+          <p class="eyebrow">Featured Artifact</p>
+          <h2>Silicon Valley Bank</h2>
+          <p class="featured-meta">March 2023 · $209 Billion · 48 Hours</p>
+        </div>
+      </div>
+      <div class="story-screens">
+        <div class="story-screen" data-step="1">
+          <div class="story-content">
+            <p class="story-time">2020 – 2021</p>
+            <h3>The deposit surge</h3>
+            <p>Tech and venture clients flood SVB with cash. The bank buys long-duration Treasuries and MBS while rates sit near zero.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="2">
+          <div class="story-content">
+            <p class="story-time">2022</p>
+            <h3>Rates rise</h3>
+            <p>The Federal Reserve hikes aggressively. SVB’s bond portfolio suffers massive unrealized losses. Duration risk is no longer theoretical.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="3">
+          <div class="story-content">
+            <p class="story-time">March 8, 2023</p>
+            <h3>The reveal</h3>
+            <p>SVB announces a $1.8B realized loss on securities sales and a capital raise. Confidence begins to crack.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="4">
+          <div class="story-content">
+            <p class="story-time">March 9</p>
+            <h3>Digital bank run</h3>
+            <p>Social media amplifies fear. $42 billion in deposits try to leave in a single day — the fastest bank run in history.</p>
+            <div class="loss-counter" id="svbCounter">
+              <span class="loss-value">$0</span>
+              <span class="loss-label">Deposits Withdrawn (Mar 9)</span>
+            </div>
+          </div>
+        </div>
+        <div class="story-screen" data-step="5">
+          <div class="story-content">
+            <p class="story-time">March 10</p>
+            <h3>Closed by regulators</h3>
+            <p>The FDIC takes over. SVB becomes the second-largest bank failure in U.S. history.</p>
+          </div>
+        </div>
+        <div class="story-screen" data-step="6">
+          <div class="story-content">
+            <h3>What changed</h3>
+            <div class="lessons-grid">
+              <div class="lesson-card">
+                <h4>Interest-Rate Risk</h4>
+                <p>Long-duration “safe” assets can destroy capital when rates move fast.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Uninsured Deposits</h4>
+                <p>Heavy concentration of uninsured funds creates extreme run risk.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Digital Speed</h4>
+                <p>Bank runs now happen in hours, not days. Liquidity buffers must match.</p>
+              </div>
+              <div class="lesson-card">
+                <h4>Communication</h4>
+                <p>Capital raises and loss disclosures need careful sequencing and clarity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGINEER MODE PANEL -->
+    <section class="engineer-panel" id="engineerPanel">
+      <div class="engineer-inner">
+        <div class="engineer-header">
+          <h2>Engineer Mode</h2>
+          <p>Architecture, sequence, and the invisible systems behind the failure.</p>
+        </div>
+        <div class="engineer-tabs">
+          <button class="eng-tab active" data-tab="architecture">Architecture</button>
+          <button class="eng-tab" data-tab="flow">Order Flow</button>
+          <button class="eng-tab" data-tab="sequence">Sequence</button>
+          <button class="eng-tab" data-tab="lessons">Hard Lessons</button>
+        </div>
+        <div class="engineer-content">
+          <div class="eng-pane active" id="pane-architecture">
+            <div class="arch-diagram">
+              <div class="arch-node">Developer</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node">Deployment</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node warn">Old Flag</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node danger">Order Generator</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node">NYSE</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node">Market</div>
+              <div class="arch-arrow">→</div>
+              <div class="arch-node loss">$440M</div>
+            </div>
+            <p class="eng-note">One server still carried a legacy flag that had been disabled everywhere else. When market open arrived, that single process began generating orders without the intended risk controls.</p>
+          </div>
+          <div class="eng-pane" id="pane-flow">
+            <pre class="code-block">
+FIX Message (simplified)
+8=FIX.4.2 | 35=D | 49=KNIGHT | 56=NYSE
+11=OrderID | 55=AAPL | 54=1 | 38=100000
+40=1 | 59=0 | 10=xxx
+
+→ Matching Engine
+→ No pre-trade risk check (legacy path)
+→ Immediate execution
+→ Position explodes
+            </pre>
+          </div>
+          <div class="eng-pane" id="pane-sequence">
+            <ol class="sequence-list">
+              <li><strong>T-0</strong> New RLP code deployed to 7 of 8 servers</li>
+              <li><strong>T+1 min</strong> One server retains old SMARS binary + Power Peg flag</li>
+              <li><strong>09:30:00</strong> Market open triggers order generation on the bad server</li>
+              <li><strong>09:30–09:45</strong> ~4 million orders, 397 million shares</li>
+              <li><strong>09:45+</strong> Manual intervention begins; damage already done</li>
+              <li><strong>Days later</strong> Knight sold to Getco; $440M loss realized</li>
+            </ol>
+          </div>
+          <div class="eng-pane" id="pane-lessons">
+            <ul class="hard-lessons">
+              <li>Never leave dead code paths that can be activated by configuration alone.</li>
+              <li>Every automated trading system requires a hard kill switch reachable in &lt; 1 second.</li>
+              <li>Deployment must be atomic and verified across the entire fleet.</li>
+              <li>Pre-trade risk checks must sit on the critical path, not as optional modules.</li>
+              <li>Canary and progressive rollout are non-negotiable for market-facing systems.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+      <h2>The museum is never finished.</h2>
+      <p>New failures continue to teach us. The best engineers study the past.</p>
+      <div class="cta-actions">
+        <a href="https://github.com" class="btn-primary" target="_blank" rel="noopener">View on GitHub</a>
+        <button class="btn-secondary" id="randomIncidentBtn">Random Incident</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Fintech Failure Museum</h3>
+        <p>Learning from the mistakes that shaped modern finance.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#">Open Source</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <p class="footer-credit">Built by Abdulaziz Pulatjonov</p>
+    </div>
+  </footer>
+
+  <!-- INCIDENT OVERLAY (fullscreen expansion) -->
+  <div class="incident-overlay" id="incidentOverlay">
+    <button class="overlay-close" id="overlayClose">×</button>
+    <div class="overlay-content" id="overlayContent"></div>
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div class="modal" id="compareModal">
+    <div class="modal-inner">
+      <button class="modal-close" id="compareClose">×</button>
+      <h3>Compare Incidents</h3>
+      <div class="compare-selects">
+        <select id="compareA"></select>
+        <span>vs</span>
+        <select id="compareB"></select>
+      </div>
+      <div class="compare-result" id="compareResult"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
